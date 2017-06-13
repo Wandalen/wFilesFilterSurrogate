@@ -1,8 +1,7 @@
 if( typeof module !== 'undefined' )
 {
   require( 'wTools' )
-  require( '../staging/amid/file/FileBase.s' )
-  require( '../staging/amid/file/FileMid.s' )
+  require( '../staging/amid/file/filter/Surrogate.s' )
 }
 
 var _ = wTools;
@@ -10,28 +9,28 @@ var _ = wTools;
 /* making file tree cache */
 
 var dir = _.pathDir( __dirname );
-var tree = _.FileFilter.CachingFolders.filesTreeMake( dir );
+var tree = _.FileFilter.Surrogate.filesTreeMake( dir );
 
-var testDir = _.pathJoin( dir, 'sample/cachingFoldersSample' );
+var testDir = _.pathJoin( dir, 'sample/SurrogateSample' );
 _.fileProvider.fileDelete( testDir );
 var filePath = _.pathJoin( testDir, 'file.txt' );
 
 /* writting to *.js file */
 
-// var fileName = _.pathChangeExt( _.pathName( dir ), 'js' );
-// var fileTreePath = _.pathJoin( dir, fileName );
-//
-// /* prepare data: rootPath and tree as json object */
-// var data = 'var rootPath = ' + _.toStr( dir, { wrap : 1 } );
-// data = data + '\nvar wFilesTree = \n' + _.toStr( tree, { json : 1 , multiline : 1 } );
-//
-// _.fileProvider.fileWrite( fileTreePath, data );
-//
-// console.log( 'Written to file: ', fileTreePath );
+var fileName = _.pathChangeExt( _.pathName( dir ), 'js' );
+var fileTreePath = _.pathJoin( dir, fileName );
+
+/* prepare data: rootPath and tree as json object */
+var data = 'var rootPath = ' + _.toStr( dir, { wrap : 1 } );
+data = data + '\nvar wFilesTree = \n' + _.toStr( tree, { json : 1 , multiline : 1 } );
+
+_.fileProvider.fileWrite( fileTreePath, data );
+
+console.log( 'Written to file: ', fileTreePath );
 
 /* making filter*/
 
-var filter = _.FileFilter.CachingFolders
+var filter = _.FileFilter.Surrogate
 ({
   tree : tree,
   rootPath : dir

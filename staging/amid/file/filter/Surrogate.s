@@ -1,4 +1,4 @@
-( function _CachingFolders_s_() {
+( function _Surrogate_s_() {
 
 'use strict';
 
@@ -7,12 +7,12 @@ if( typeof module !== 'undefined' )
 {
   isBrowser = false;
 
-  require( '../aprovider/Abstract.s' );
-
+  require( 'wTools' );
+  require( 'wFiles' );
 }
 
 wTools.FileFilter = wTools.FileFilter || Object.create( null );
-if( wTools.FileFilter.CachingFolders )
+if( wTools.FileFilter.Surrogate )
 return;
 
 //
@@ -21,14 +21,14 @@ var _ = wTools;
 var Abstract = _.FileProvider.Abstract;
 var Default = _.FileProvider.Default;
 var Parent = null;
-var Self = function wFileFilterCachingFolders( o )
+var Self = function wFileFilterSurrogate( o )
 {
   if( !( this instanceof Self ) )
   return Self.prototype.init.apply( this,arguments );
-  throw _.err( 'Call wFileFilterCachingFolders without new please' );
+  throw _.err( 'Call wFileFilterSurrogate without new please' );
 }
 
-Self.nameShort = 'CachingFolders';
+Self.nameShort = 'Surrogate';
 
 //
 
@@ -709,7 +709,7 @@ _.protoMake
 
 //
 
-_.FileFilter.CachingFolders = Self;
+_.FileFilter.Surrogate = Self;
 
 if( typeof module !== 'undefined' )
 {
