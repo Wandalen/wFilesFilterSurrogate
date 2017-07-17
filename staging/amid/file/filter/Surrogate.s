@@ -19,6 +19,7 @@ return;
 
 var _ = wTools;
 var Abstract = _.FileProvider.Abstract;
+var Partial = _.FileProvider.Partial;
 var Default = _.FileProvider.Default;
 var Parent = null;
 var Self = function wFileFilterSurrogate( o )
@@ -284,7 +285,7 @@ function directoryRead( o )
 }
 
 directoryRead.defaults = {};
-directoryRead.defaults.__proto__ = Abstract.prototype.directoryRead.defaults;
+directoryRead.defaults.__proto__ = Partial.prototype.directoryRead.defaults;
 
 
 //
@@ -315,7 +316,7 @@ function fileWrite( o )
 }
 
 fileWrite.defaults = {};
-fileWrite.defaults.__proto__ = Abstract.prototype.fileWrite.defaults;
+fileWrite.defaults.__proto__ = Partial.prototype.fileWrite.defaults;
 
 //
 
@@ -345,7 +346,7 @@ function fileDelete( o )
 }
 
 fileDelete.defaults = {};
-fileDelete.defaults.__proto__ = Abstract.prototype.fileDelete.defaults;
+fileDelete.defaults.__proto__ = Partial.prototype.fileDelete.defaults;
 
 //
 
@@ -375,7 +376,7 @@ function directoryMake( o )
 }
 
 directoryMake.defaults = {};
-directoryMake.defaults.__proto__ = Abstract.prototype.directoryMake.defaults;
+directoryMake.defaults.__proto__ = Partial.prototype.directoryMake.defaults;
 
 //
 
@@ -419,7 +420,7 @@ function fileRename( o )
 }
 
 fileRename.defaults = {};
-fileRename.defaults.__proto__ = Abstract.prototype.fileRename.defaults;
+fileRename.defaults.__proto__ = Partial.prototype.fileRename.defaults;
 
 //
 
@@ -462,7 +463,7 @@ function fileCopy( o )
 }
 
 fileCopy.defaults = {};
-fileCopy.defaults.__proto__ = Abstract.prototype.fileCopy.defaults;
+fileCopy.defaults.__proto__ = Partial.prototype.fileCopy.defaults;
 
 //
 
@@ -505,7 +506,7 @@ function linkSoft( o )
 }
 
 linkSoft.defaults = {};
-linkSoft.defaults.__proto__ = Abstract.prototype.linkSoft.defaults;
+linkSoft.defaults.__proto__ = Partial.prototype.linkSoft.defaults;
 
 //
 
@@ -548,9 +549,7 @@ function linkHard( o )
 }
 
 linkHard.defaults = {};
-linkHard.defaults.__proto__ = Abstract.prototype.linkHard.defaults;
-
-//
+linkHard.defaults.__proto__ = Partial.prototype.linkHard.defaults;
 
 //
 
@@ -618,7 +617,7 @@ function fileExchange( o )
 }
 
 fileExchange.defaults = {};
-fileExchange.defaults.__proto__ = Abstract.prototype.fileExchange.defaults;
+fileExchange.defaults.__proto__ = Partial.prototype.fileExchange.defaults;
 
 // --
 // relationship
@@ -655,7 +654,9 @@ var Statics =
 
 var Extend =
 {
+
   _select : _select,
+
   directoryRead : directoryRead,
 
   fileWrite : fileWrite,
