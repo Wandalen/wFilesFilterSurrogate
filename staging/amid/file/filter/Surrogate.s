@@ -7,8 +7,20 @@ if( typeof module !== 'undefined' )
 {
   isBrowser = false;
 
-  require( 'wTools' );
-  require( 'wFiles' );
+  try
+  {
+    require( '../../../aBase/wTools.s' );
+  }
+  catch( err )
+  {
+    require( 'wTools' );
+  }
+
+  var _ = wTools;
+
+  if( !wTools.FileProvider.Partial )
+  require( '../aprovider/aPartial.s' );
+
 }
 
 wTools.FileFilter = wTools.FileFilter || Object.create( null );
@@ -699,7 +711,7 @@ var Proto =
 
 _.mapExtend( Proto,Extend );
 
-_.protoMake
+_.prototypeMake
 ({
   cls : Self,
   parent : Parent,
