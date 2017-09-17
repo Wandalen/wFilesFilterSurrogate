@@ -1,8 +1,6 @@
+
 if( typeof module !== 'undefined' )
-{
-  require( 'wTools' )
-  require( '../staging/dwtools/amid/file/filter/Surrogate.s' )
-}
+require( 'wfilesfiltersurrogate' )
 
 var _ = wTools;
 
