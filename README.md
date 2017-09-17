@@ -29,3 +29,4 @@ var filter = _.FileFilter.Surrogate
 var files = filter.directoryRead( rootPath );
 console.log( files );
 ```
+
