@@ -22,7 +22,7 @@
     <script src="../node_modules/wFiles/staging/dwtools/amid/file/aprovider/AdvancedMixin.s"></script>
     <script src="../node_modules/wFiles/staging/dwtools/amid/file/aprovider/SimpleStructure.s"></script>
     <script src="../staging/dwtools/amid/file/filter/Surrogate.s"></script>
-    <script src="../wFilesFilterSurrogate.js"></script>
+    <script src="./sample/SurrogateSample/wFilesFilterSurrogate.js"></script>
     <script>
     var _ = wTools;
     var filter = _.FileFilter.Surrogate
@@ -34,9 +34,6 @@
 
     /* getting files list using absolute path */
     var files = filter.directoryRead( rootPath );
-    console.log( files );
-
-    var files = filter.directoryRead( _.pathJoin( rootPath, 'staging/dwtools/amid/file' ) );
     console.log( files );
     </script>
   </head>
