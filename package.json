@@ -1,6 +1,6 @@
 {
   "name": "wfilesfiltersurrogate",
-  "version": "0.5.12",
+  "version": "0.5.13",
   "engine": "node >= 6.0.0",
   "description": "Filter for wFiles provider's that works with provided files tree cache as real file system",
   "license": "MIT",
@@ -19,9 +19,9 @@
       "email": "volodymyr.migdal@gmail.com"
     }
   ],
-  "main": "staging/amid/file/Surrogate.s",
+  "main": "staging/dwtools/amid/file/Surrogate.s",
   "files": [
-    "staging/amid",
+    "staging/dwtools/amid",
     "production"
   ],
   "scripts": {
@@ -46,7 +46,8 @@
   },
   "devDependencies": {
     "wTesting": "",
-    "typedarray-to-buffer": ""
+    "typedarray-to-buffer": "",
+    "wfilesfiltersurrogate": "."
   },
   "keywords": [
     "wTools",

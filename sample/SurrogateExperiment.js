@@ -1,8 +1,6 @@
+
 if( typeof module !== 'undefined' )
-{
-  require( 'wTools' )
-  require( '../staging/amid/file/filter/Surrogate.s' )
-}
+require( 'wfilesfiltersurrogate' )
 
 var _ = wTools;
 
@@ -41,8 +39,8 @@ var filter = _.FileFilter.Surrogate
 var files = filter.directoryRead( dir );
 console.log( dir + ": \n", files );
 
-var files = filter.directoryRead( _.pathJoin( dir, 'staging/amid/file' ) );
-console.log( "staging/amid/file: \n", files );
+var files = filter.directoryRead( _.pathJoin( dir, 'staging/dwtools/amid/file' ) );
+console.log( "staging/dwtools/amid/file: \n", files );
 
 /* creating new file */
 

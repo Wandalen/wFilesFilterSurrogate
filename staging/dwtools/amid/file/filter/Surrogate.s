@@ -7,8 +7,20 @@ if( typeof module !== 'undefined' )
 {
   isBrowser = false;
 
-  require( 'wTools' );
-  require( 'wFiles' );
+  try
+  {
+    require( '../../../Base.s' );
+  }
+  catch( err )
+  {
+    require( 'wTools' );
+  }
+
+  var _ = wTools;
+
+  if( !wTools.FileProvider.Partial )
+  require( '../aprovider/aPartial.s' );
+
 }
 
 wTools.FileFilter = wTools.FileFilter || Object.create( null );
@@ -19,6 +31,7 @@ return;
 
 var _ = wTools;
 var Abstract = _.FileProvider.Abstract;
+var Partial = _.FileProvider.Partial;
 var Default = _.FileProvider.Default;
 var Parent = null;
 var Self = function wFileFilterSurrogate( o )
@@ -120,7 +133,7 @@ function _filesTreeMake( o )
   //   this.original.fileWrite
   //   (
   //     filePath,
-  //     _.toStr( structure, { json : 1 , multiline : 1 } )
+  //     _.toStr( structure, { jsonLike : 1 , multiline : 1 } )
   //   );
   //
   //   if( o.verbosity )
@@ -284,7 +297,7 @@ function directoryRead( o )
 }
 
 directoryRead.defaults = {};
-directoryRead.defaults.__proto__ = Abstract.prototype.directoryRead.defaults;
+directoryRead.defaults.__proto__ = Partial.prototype.directoryRead.defaults;
 
 
 //
@@ -315,7 +328,7 @@ function fileWrite( o )
 }
 
 fileWrite.defaults = {};
-fileWrite.defaults.__proto__ = Abstract.prototype.fileWrite.defaults;
+fileWrite.defaults.__proto__ = Partial.prototype.fileWrite.defaults;
 
 //
 
@@ -345,7 +358,7 @@ function fileDelete( o )
 }
 
 fileDelete.defaults = {};
-fileDelete.defaults.__proto__ = Abstract.prototype.fileDelete.defaults;
+fileDelete.defaults.__proto__ = Partial.prototype.fileDelete.defaults;
 
 //
 
@@ -375,7 +388,7 @@ function directoryMake( o )
 }
 
 directoryMake.defaults = {};
-directoryMake.defaults.__proto__ = Abstract.prototype.directoryMake.defaults;
+directoryMake.defaults.__proto__ = Partial.prototype.directoryMake.defaults;
 
 //
 
@@ -386,20 +399,20 @@ function fileRename( o )
   if( arguments.length === 2 )
   o =
   {
-    pathDst : arguments[ 0 ],
-    pathSrc : arguments[ 1 ],
+    dstPath : arguments[ 0 ],
+    srcPath : arguments[ 1 ],
   }
 
   var result = self.original.fileRename( o );
 
   function _rename()
   {
-    if( o.pathDst === o.pathSrc )
+    if( o.dstPath === o.srcPath )
     return;
 
-    var src = self._select( o.pathSrc, 'get' );
-    self._select( o.pathDst, 'set', src );
-    self._select( o.pathSrc, 'delete' );
+    var src = self._select( o.srcPath, 'get' );
+    self._select( o.dstPath, 'set', src );
+    self._select( o.srcPath, 'delete' );
   }
 
   if( !o.sync )
@@ -419,7 +432,7 @@ function fileRename( o )
 }
 
 fileRename.defaults = {};
-fileRename.defaults.__proto__ = Abstract.prototype.fileRename.defaults;
+fileRename.defaults.__proto__ = Partial.prototype.fileRename.defaults;
 
 //
 
@@ -430,19 +443,19 @@ function fileCopy( o )
   if( arguments.length === 2 )
   o =
   {
-    pathDst : arguments[ 0 ],
-    pathSrc : arguments[ 1 ],
+    dstPath : arguments[ 0 ],
+    srcPath : arguments[ 1 ],
   }
 
   var result = self.original.fileCopy( o );
 
   function _copy()
   {
-    if( o.pathDst === o.pathSrc )
+    if( o.dstPath === o.srcPath )
     return;
 
-    var src = self._select( o.pathSrc, 'get' );
-    self._select( o.pathDst, 'set', src );
+    var src = self._select( o.srcPath, 'get' );
+    self._select( o.dstPath, 'set', src );
   }
 
   if( !o.sync )
@@ -462,7 +475,7 @@ function fileCopy( o )
 }
 
 fileCopy.defaults = {};
-fileCopy.defaults.__proto__ = Abstract.prototype.fileCopy.defaults;
+fileCopy.defaults.__proto__ = Partial.prototype.fileCopy.defaults;
 
 //
 
@@ -473,19 +486,19 @@ function linkSoft( o )
   if( arguments.length === 2 )
   o =
   {
-    pathDst : arguments[ 0 ],
-    pathSrc : arguments[ 1 ],
+    dstPath : arguments[ 0 ],
+    srcPath : arguments[ 1 ],
   }
 
   var result = self.original.linkSoft( o );
 
   function _link()
   {
-    if( o.pathDst === o.pathSrc )
+    if( o.dstPath === o.srcPath )
     return;
 
-    var src = self._select( o.pathSrc, 'get' );
-    self._select( o.pathDst, 'set', src );
+    var src = self._select( o.srcPath, 'get' );
+    self._select( o.dstPath, 'set', src );
   }
 
   if( !o.sync )
@@ -505,7 +518,7 @@ function linkSoft( o )
 }
 
 linkSoft.defaults = {};
-linkSoft.defaults.__proto__ = Abstract.prototype.linkSoft.defaults;
+linkSoft.defaults.__proto__ = Partial.prototype.linkSoft.defaults;
 
 //
 
@@ -516,19 +529,19 @@ function linkHard( o )
   if( arguments.length === 2 )
   o =
   {
-    pathDst : arguments[ 0 ],
-    pathSrc : arguments[ 1 ],
+    dstPath : arguments[ 0 ],
+    srcPath : arguments[ 1 ],
   }
 
   var result = self.original.linkHard( o );
 
   function _link()
   {
-    if( o.pathDst === o.pathSrc )
+    if( o.dstPath === o.srcPath )
     return;
 
-    var src = self._select( o.pathSrc, 'get' );
-    self._select( o.pathDst, 'set', src );
+    var src = self._select( o.srcPath, 'get' );
+    self._select( o.dstPath, 'set', src );
   }
 
   if( !o.sync )
@@ -548,9 +561,7 @@ function linkHard( o )
 }
 
 linkHard.defaults = {};
-linkHard.defaults.__proto__ = Abstract.prototype.linkHard.defaults;
-
-//
+linkHard.defaults.__proto__ = Partial.prototype.linkHard.defaults;
 
 //
 
@@ -561,43 +572,43 @@ function fileExchange( o )
   if( arguments.length === 2 )
   o =
   {
-    pathDst : arguments[ 0 ],
-    pathSrc : arguments[ 1 ],
+    dstPath : arguments[ 0 ],
+    srcPath : arguments[ 1 ],
   }
 
-  var pathSrc = o.pathSrc;
-  var pathDst = o.pathDst;
+  var srcPath = o.srcPath;
+  var dstPath = o.dstPath;
 
   var result = self.original.fileExchange( o );
 
   function _exchange()
   {
-    o.pathSrc = pathSrc;
-    o.pathDst = pathDst;
+    o.srcPath = srcPath;
+    o.dstPath = dstPath;
 
-    if( o.pathDst === o.pathSrc )
+    if( o.dstPath === o.srcPath )
     return;
 
-    var src = self._select( o.pathSrc );
-    var dst = self._select( o.pathDst );
+    var src = self._select( o.srcPath );
+    var dst = self._select( o.dstPath );
 
     if( !src && !dst )
     return;
 
     if( !src && dst )
     {
-      self._select( o.pathSrc, 'set', dst );
-      self._select( o.pathDst, 'delete' );
+      self._select( o.srcPath, 'set', dst );
+      self._select( o.dstPath, 'delete' );
     }
     else if( src && !dst )
     {
-      self._select( o.pathDst, 'set', src );
-      self._select( o.pathSrc, 'delete' );
+      self._select( o.dstPath, 'set', src );
+      self._select( o.srcPath, 'delete' );
     }
     else
     {
-      self._select( o.pathSrc, 'set', dst );
-      self._select( o.pathDst, 'set', src );
+      self._select( o.srcPath, 'set', dst );
+      self._select( o.dstPath, 'set', src );
     }
   }
 
@@ -618,7 +629,7 @@ function fileExchange( o )
 }
 
 fileExchange.defaults = {};
-fileExchange.defaults.__proto__ = Abstract.prototype.fileExchange.defaults;
+fileExchange.defaults.__proto__ = Partial.prototype.fileExchange.defaults;
 
 // --
 // relationship
@@ -655,7 +666,9 @@ var Statics =
 
 var Extend =
 {
+
   _select : _select,
+
   directoryRead : directoryRead,
 
   fileWrite : fileWrite,
@@ -698,7 +711,7 @@ var Proto =
 
 _.mapExtend( Proto,Extend );
 
-_.protoMake
+_.classMake
 ({
   cls : Self,
   parent : Parent,
