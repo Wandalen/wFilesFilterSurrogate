@@ -17,7 +17,7 @@ var tree = _.FileFilter.Surrogate.filesTreeMake( rootPath );
 var fileTreePath = _.pathJoin( testDir, 'wFilesFilterSurrogate.js' );
 
 /* prepare data: rootPath and tree as json object */
-var data = 'var rootPath = ' + _.toStr( testDir, { wrap : 1 } );
+var data = 'var rootPath = ' + _.toStr( rootPath, { wrap : 1 } );
 data = data + '\nvar wFilesTree = \n' + _.toStr( tree, { jsonLike : 1 , multiline : 1 } );
 
 _.fileProvider.fileWrite( fileTreePath, data );
