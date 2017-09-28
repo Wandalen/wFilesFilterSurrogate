@@ -18,8 +18,8 @@ if( typeof module !== 'undefined' )
 
   var _ = wTools;
 
-  if( !wTools.FileProvider.Partial )
-  require( '../aprovider/aPartial.s' );
+  if( !wTools.FileProvider )
+  require( 'wFiles' );
 
 }
 
@@ -98,7 +98,7 @@ function _filesTreeMake( o )
   ({
     filePath : o.filePath,
     recursive : 1,
-    includeDirectories: 1
+    includingDirectories: 1,
   });
 
   var structure = Object.create( null );
@@ -167,7 +167,7 @@ function filesTreeMake( filePath )
 
 //
 
-function _select( path, mode, value )
+function _select( path, mode, value, o )
 {
   var self = this;
 
@@ -177,16 +177,25 @@ function _select( path, mode, value )
   var usingSet = mode === 'set' ? 1 : 0;
   var usingDelete = mode === 'delete' ? 1 : 0;
   var usingGet = mode === 'get' ? 1 : 0;
+  var pathDir, fileName;
 
   path = _.pathRelative( self.rootPath, path );
 
-  if( usingDelete )
+  if( usingDelete && path !== '.' )
   {
-    var pathDir = _.pathResolve( _.pathDir( path ) );
-    pathDir = _.pathRelative( self.rootPath, pathDir );
-    if( pathDir === '.' )
+    // pathDir = _.pathResolve( _.pathDir( path ) );
+    // pathDir = _.pathRelative( self.rootPath, pathDir );
+    // if( pathDir === '.' )
+    // pathDir = '';
+    // fileName = _.pathName({ path : path, withExtension : 1 });
+
+    var splitted = _.pathSplit( path );
+    if( splitted.length > 1 )
+    pathDir = splitted[ 0 ];
+    else
     pathDir = '';
-    var fileName = _.pathName({ path : path, withExtension : 1 });
+
+    fileName = _.pathName({ path : path, withExtension : 1 });
   }
 
   if( path === '.' )
@@ -205,7 +214,23 @@ function _select( path, mode, value )
   return result;
 
   if( usingDelete )
-  return delete result[ fileName ];
+  {
+    if( path === '' )
+    {
+      self.tree = Object.create( null );
+      return;
+    }
+
+    if( !_.definedIs( result ) ||  !_.definedIs( result[ fileName ] ) )
+    {
+      if( !o.force )
+      throw _.err( 'No such file or directory', o.filePath )
+    }
+    else
+    {
+      return delete result[ fileName ];
+    }
+  }
 
   if( _.objectIs( result ) )
   return Object.keys( result );
@@ -346,12 +371,12 @@ function fileDelete( o )
     return result
     .ifNoErrorThen( function()
     {
-      self._select( o.filePath, 'delete' );
+      self._select( o.filePath, 'delete', undefined, o );
     });
   }
   else
   {
-    self._select( o.filePath, 'delete' );
+    self._select( o.filePath, 'delete', undefined, o );
   }
 
   return result;

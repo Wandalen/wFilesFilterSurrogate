@@ -3,41 +3,111 @@
   <head>
     <meta charset="UTF-8" />
     <title> FileFilter.Surrogate example </title>
-    <script src="../node_modules/wTools/staging/dwtools/abase/wTools.s"></script>
-    <script src="../node_modules/wTools/staging/dwtools/abase/akernel/aKernel.s"></script>
-    <script src="../node_modules/wTools/staging/dwtools/abase/akernel/akernelWithComponents.s"></script>
-    <script src="../node_modules/wTools/staging/dwtools/abase/akernel/cFieldFilter.s"></script>
-    <script src="../node_modules/wTools/staging/dwtools/abase/akernel/cFieldMapper.s"></script>
-    <script src="../node_modules/wTools/staging/dwtools/abase/akernel/eNameTools.s"></script>
-    <script src="../node_modules/wTools/staging/dwtools/abase/akernel/eExecTools.s"></script>
-    <script src="../node_modules/wTools/staging/dwtools/abase/akernel/eStringTools.s"></script>
-    <script src="../node_modules/wTools/staging/dwtools/abase/akernel/eInclude.s"></script>
+    <script src="../node_modules/wTools/staging/dwtools/abase/layer1/aFundamental.s"></script>
+    <script src="../node_modules/wTools/staging/dwtools/abase/layer1/cDiagnostics.s"></script>
+    <script src="../node_modules/wTools/staging/dwtools/abase/layer1/cFieldMapper.s"></script>
+    <script src="../node_modules/wTools/staging/dwtools/abase/layer1/cxArrayDescriptor.s"></script>
+    <script src="../node_modules/wTools/staging/dwtools/abase/layer1/dSetup.s"></script>
+    <script src="../node_modules/wTools/staging/dwtools/abase/layer2/fExecTools.s"></script>
+    <script src="../node_modules/wTools/staging/dwtools/abase/layer2/fIncludeTools.s"></script>
+    <script src="../node_modules/wTools/staging/dwtools/abase/layer2/fNameTools.s"></script>
+    <script src="../node_modules/wTools/staging/dwtools/abase/layer2/fStringTools.s"></script>
+
     <script src="../node_modules/wProto/staging/dwtools/abase/layer3/Proto.s"></script>
     <script src="../node_modules/winstancing/staging/dwtools/abase/mixin/Instancing.s"></script>
-    <script src="../node_modules/wPath/staging/dwtools/abase/layer3/Path.s"></script>
-    <script src="../node_modules/wcloner/staging/dwtools/abase/layer3/Cloner.s"></script>
+    <script src="../node_modules/wPath/staging/dwtools/abase/layer3/PathTools.s"></script>
+    <script src="../node_modules/wcloner/staging/dwtools/abase/component/Cloner.s"></script>
     <script src="../node_modules/wCopyable/staging/dwtools/abase/mixin/Copyable.s"></script>
     <script src="../node_modules/wConsequence/staging/dwtools/abase/oclass/Consequence.s"></script>
-    <script src="../node_modules/wFiles/staging/dwtools/amid/file/aprovider/Abstract.s"></script>
-    <script src="../node_modules/wFiles/staging/dwtools/amid/file/aprovider/AdvancedMixin.s"></script>
-    <script src="../node_modules/wFiles/staging/dwtools/amid/file/aprovider/SimpleStructure.s"></script>
+
+
+    <script src="../node_modules/wFiles/staging/dwtools/amid/file/FileBase.s"></script>
+    <script src="../node_modules/wFiles/staging/dwtools/amid/file/base/FileRecordOptions.s"></script>
+    <script src="../node_modules/wFiles/staging/dwtools/amid/file/base/FileRecord.s"></script>
+    <script src="../node_modules/wFiles/staging/dwtools/amid/file/fprovider/aAbstract.s"></script>
+    <script src="../node_modules/wFiles/staging/dwtools/amid/file/fprovider/aPartial.s"></script>
+    <script src="../node_modules/wFiles/staging/dwtools/amid/file/fprovider/mFindMixin.s"></script>
+    <script src="../node_modules/wFiles/staging/dwtools/amid/file/fprovider/mSecondaryMixin.s"></script>
+    <script src="../node_modules/wFiles/staging/dwtools/amid/file/fprovider/pSimpleStructure.s"></script>
+    <script src="../node_modules/wFiles/staging/dwtools/amid/file/FileMid.s"></script>
+    <script src="../node_modules/wFiles/staging/dwtools/amid/file/FileTop.s"></script>
+
+
     <script src="../staging/dwtools/amid/file/filter/Surrogate.s"></script>
-    <script src="../wFilesFilterSurrogate.js"></script>
+    <script src="./SurrogateSample/wFilesFilterSurrogate.js"></script>
     <script>
     var _ = wTools;
+
+    var testDir = _.pathJoin( rootPath, 'SurrogateSample' );
+    var filePath = _.pathJoin( testDir, 'file.txt' );
+
     var filter = _.FileFilter.Surrogate
     ({
       tree : wFilesTree,
-      original : _.FileProvider.SimpleStructure(),
+      original : _.FileProvider.SimpleStructure({ filesTree : {} }),
       rootPath : rootPath
     });
 
+    console.log( 'Files tree: ', _.toStr( filter.tree, { levels : 99 } ) )
+
     /* getting files list using absolute path */
+
+    console.log( 'Getting files list using absolute path:', rootPath )
     var files = filter.directoryRead( rootPath );
     console.log( files );
 
-    var files = filter.directoryRead( _.pathJoin( rootPath, 'staging/dwtools/amid/file' ) );
-    console.log( files );
+    /* creating new file */
+
+    // filter.directoryMake( testDir );
+    // filter.fileWrite( filePath, 'abc' );
+    // var files = filter.directoryRead( _.pathDir( filePath ) )
+    // console.log( files );
+
+    /* creating new testDir */
+
+    // filter.fileDelete( testDir );
+    // filter.directoryMake( testDir );
+    // var files = filter.directoryRead( _.pathDir( testDir ) )
+    // console.log( files );
+
+    /* deleting file */
+
+    // filter.fileWrite( filePath, 'abc' );
+    // var files = filter.directoryRead( _.pathDir( filePath ) )
+    // console.log( files );
+    // debugger
+    // filter.fileDelete( filePath );
+    // var files = filter.directoryRead( _.pathDir( filePath ) )
+    // console.log( files );
+
+    /* rename file */
+
+    // filter.fileWrite( filePath, 'abc' );
+    // var files = filter.directoryRead( testDir );
+    // console.log( files );
+    // filter.fileRename( _.pathJoin( testDir, 'file.js' ), filePath );
+    // var files = filter.directoryRead( testDir );
+    // console.log( files );
+
+    /* copying */
+
+    // filter.fileDelete( testDir );
+    // filter.fileWrite( filePath, 'abc' );
+    // var filePath2 = _.pathJoin( testDir, 'file.js' );
+    // filter.fileCopy( filePath2, filePath );
+    // var files = filter.directoryRead( testDir );
+    // console.log( files );
+
+    /* exchange files */
+
+    // filter.fileDelete( testDir );
+    // var path1 = _.pathJoin( testDir, 'dir1/file1.txt' );
+    // var path2 = _.pathJoin( testDir, 'dir2/file2.txt' );
+    // filter.fileWrite( path1, 'abc' )
+    // filter.fileWrite( path2, 'bca' )
+    // filter.fileExchange( _.pathDir( path1 ), _.pathDir( path2 ) );
+    // console.log( filter.tree[ _.pathName( testDir ) ] );
+
     </script>
   </head>
   <body>

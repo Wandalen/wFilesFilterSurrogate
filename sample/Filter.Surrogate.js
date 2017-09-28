@@ -6,41 +6,27 @@ var _ = wTools;
 
 /* making file tree cache */
 
-var dir = _.pathDir( __dirname );
-var tree = _.FileFilter.Surrogate.filesTreeMake( dir );
-
-var testDir = _.pathJoin( dir, 'sample/SurrogateSample' );
-_.fileProvider.fileDelete( testDir );
+var testDir = _.pathJoin( __dirname, 'SurrogateSample' );
 var filePath = _.pathJoin( testDir, 'file.txt' );
 
-/* writting to *.js file */
+_.fileProvider.fileDelete( testDir );
 
-var fileName = _.pathChangeExt( _.pathName( dir ), 'js' );
-var fileTreePath = _.pathJoin( dir, fileName );
+var rootPath = _.pathDir( testDir );
 
-/* prepare data: rootPath and tree as json object */
-var data = 'var rootPath = ' + _.toStr( dir, { wrap : 1 } );
-data = data + '\nvar wFilesTree = \n' + _.toStr( tree, { json : 1 , multiline : 1 } );
-
-_.fileProvider.fileWrite( fileTreePath, data );
-
-console.log( 'Written to file: ', fileTreePath );
+var tree = _.FileFilter.Surrogate.filesTreeMake( rootPath );
 
 /* making filter*/
 
 var filter = _.FileFilter.Surrogate
 ({
   tree : tree,
-  rootPath : dir
+  rootPath : rootPath
 });
 
 /* getting files list using absolute path */
 
-var files = filter.directoryRead( dir );
-console.log( dir + ": \n", files );
-
-var files = filter.directoryRead( _.pathJoin( dir, 'staging/dwtools/amid/file' ) );
-console.log( "staging/dwtools/amid/file: \n", files );
+// var files = filter.directoryRead( rootPath );
+// console.log( rootPath + ": \n", files );
 
 /* creating new file */
 
@@ -48,7 +34,7 @@ console.log( "staging/dwtools/amid/file: \n", files );
 // var files = filter.directoryRead( _.pathDir( filePath ) )
 // console.log( files );
 
-/* creating new dir */
+/* creating new testDir */
 
 // filter.fileDelete( testDir );
 // filter.directoryMake( testDir );
@@ -60,6 +46,7 @@ console.log( "staging/dwtools/amid/file: \n", files );
 // filter.fileWrite( filePath, 'abc' );
 // var files = filter.directoryRead( _.pathDir( filePath ) )
 // console.log( files );
+// debugger
 // filter.fileDelete( filePath );
 // var files = filter.directoryRead( _.pathDir( filePath ) )
 // console.log( files );
@@ -90,4 +77,4 @@ console.log( "staging/dwtools/amid/file: \n", files );
 // filter.fileWrite( path1, 'abc' )
 // filter.fileWrite( path2, 'bca' )
 // filter.fileExchange( _.pathDir( path1 ), _.pathDir( path2 ) );
-// console.log( filter.tree[ 'sample' ] );
+// console.log( filter.tree[ _.pathName( testDir ) ] );
