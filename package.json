@@ -19,7 +19,7 @@
       "email": "volodymyr.migdal@gmail.com"
     }
   ],
-  "main": "staging/dwtools/amid/file/Surrogate.s",
+  "main": "staging/dwtools/amid/file/filter/Surrogate.s",
   "files": [
     "staging/dwtools/amid",
     "production"
