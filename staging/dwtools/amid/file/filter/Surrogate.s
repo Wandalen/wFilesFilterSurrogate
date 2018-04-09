@@ -7,29 +7,40 @@ if( typeof module !== 'undefined' )
 {
   isBrowser = false;
 
-  try
+  if( typeof _global_ === 'undefined' || !_global_.wBase )
   {
-    require( '../../../Base.s' );
-  }
-  catch( err )
-  {
-    require( 'wTools' );
+    let toolsPath = '../../../../dwtools/Base.s';
+    let toolsExternal = 0;
+    try
+    {
+      require.resolve( toolsPath )/*hhh*/;
+    }
+    catch( err )
+    {
+      toolsExternal = 1;
+      require( 'wTools' );
+    }
+    if( !toolsExternal )
+    require( toolsPath )/*hhh*/;
   }
 
-  var _ = wTools;
 
-  if( !wTools.FileProvider )
+  var _ = _global_.wTools;
+
+  if( !_global_.wTools.FileProvider )
   require( 'wFiles' );
 
 }
 
-wTools.FileFilter = wTools.FileFilter || Object.create( null );
-if( wTools.FileFilter.Surrogate )
+//
+
+var _ = _global_.wTools;
+_.FileFilter = _.FileFilter || Object.create( null );
+if( _.FileFilter.Surrogate )
 return;
 
 //
 
-var _ = wTools;
 var Abstract = _.FileProvider.Abstract;
 var Partial = _.FileProvider.Partial;
 var Default = _.FileProvider.Default;
@@ -38,7 +49,7 @@ var Self = function wFileFilterSurrogate( o )
 {
   if( !( this instanceof Self ) )
   return Self.prototype.init.apply( this,arguments );
-  throw _.err( 'Call wFileFilterSurrogate without new please' );
+  throw _.err( 'Call ' + Self.name + ' without "new" please' );
 }
 
 Self.nameShort = 'Surrogate';
@@ -263,16 +274,16 @@ function directoryRead( o )
     if( o.sync )
     return result;
     else
-    return wConsequence().give( result );
+    return _.Consequence().give( result );
   }
 
   function handleError()
   {
-    var err = _.err( "No such file or directory: ", '"' + o.filePath + '"' )
+    var err = _.err( 'No such file or directory: ', '"' + o.filePath + '"' )
     if( o.sync )
     throw err;
     else
-    return wConsequence().error( err );
+    return _.Consequence().error( err );
   }
 
   result = self._select( o.filePath );
@@ -313,17 +324,14 @@ function directoryRead( o )
     //   if( o.sync )
     //   return result;
     //   else
-    //   return wConsequence().give( result );
+    //   return _.Consequence().give( result );
     // }
   // }
-
-
 
 }
 
 directoryRead.defaults = {};
 directoryRead.defaults.__proto__ = Partial.prototype.directoryRead.defaults;
-
 
 //
 
@@ -743,15 +751,22 @@ _.classMake
   extend : Proto,
 });
 
-// wCopyable.mixin( Self );
+// _.Copyable.mixin( Self );
 
 //
 
-_.FileFilter.Surrogate = Self;
+_.FileFilter = _.FileFilter || Object.create( null );
+_.FileFilter[ Self.nameShort ] = Self;
+
+// --
+// export
+// --
 
 if( typeof module !== 'undefined' )
-{
-  module[ 'exports' ] = Self;
-}
+if( _global_._UsingWtoolsPrivately_ )
+delete require.cache[ module.id ];
+
+if( typeof module !== 'undefined' && module !== null )
+module[ 'exports' ] = Self;
 
 })();
