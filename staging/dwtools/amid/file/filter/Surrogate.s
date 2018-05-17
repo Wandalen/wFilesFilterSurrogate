@@ -171,7 +171,7 @@ function filesTreeMake( filePath )
    if( !isBrowser )
    o.fileProvider = _.FileProvider.HardDrive();
    else
-   o.fileProvider = _.FileProvider.SimpleStructure({ filesTree : {} });
+   o.fileProvider = _.FileProvider.Extract({ filesTree : {} });
 
    return _filesTreeMake( o )
 }
