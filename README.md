@@ -21,7 +21,7 @@ var filesTree = _.FileFilter.Surrogate.filesTreeMake( rootPath );
 var filter = _.FileFilter.Surrogate
 ({
   tree : filesTree,
-  original : _.FileProvider.SimpleStructure(),
+  original : _.FileProvider.Extract(),
   rootPath : rootPath
 });
 
