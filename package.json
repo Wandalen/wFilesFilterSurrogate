@@ -1,6 +1,6 @@
 {
   "name": "wfilesfiltersurrogate",
-  "version": "0.5.19",
+  "version": "0.5.20",
   "engine": "node >= 6.0.0",
   "description": "Filter for wFiles provider's that works with provided files tree cache as real file system",
   "license": "MIT",
