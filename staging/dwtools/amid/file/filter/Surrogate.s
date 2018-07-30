@@ -52,7 +52,7 @@ var Self = function wFileFilterSurrogate( o )
   throw _.err( 'Call ' + Self.name + ' without "new" please' );
 }
 
-Self.nameShort = 'Surrogate';
+Self.shortName = 'Surrogate';
 
 //
 
@@ -756,7 +756,7 @@ _.classMake
 //
 
 _.FileFilter = _.FileFilter || Object.create( null );
-_.FileFilter[ Self.nameShort ] = Self;
+_.FileFilter[ Self.shortName ] = Self;
 
 // --
 // export
