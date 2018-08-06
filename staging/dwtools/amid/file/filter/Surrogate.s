@@ -139,8 +139,8 @@ function _filesTreeMake( o )
 
   // if( o.writeToFile )
   // {
-  //   var fileName = _.pathChangeExt( _.pathName( o.filePath ), 'js' );
-  //   var filePath = _.pathJoin( o.filePath, fileName );
+  //   var fileName = _.path.changeExt( _.path.name( o.filePath ), 'js' );
+  //   var filePath = _.path.join( o.filePath, fileName );
   //   this.original.fileWrite
   //   (
   //     filePath,
@@ -188,25 +188,25 @@ function _select( path, mode, value, o )
   var usingSet = mode === 'set' ? 1 : 0;
   var usingDelete = mode === 'delete' ? 1 : 0;
   var usingGet = mode === 'get' ? 1 : 0;
-  var pathDir, fileName;
+  var dir, fileName;
 
-  path = _.pathRelative( self.rootPath, path );
+  path = _.path.relative( self.rootPath, path );
 
   if( usingDelete && path !== '.' )
   {
-    // pathDir = _.pathResolve( _.pathDir( path ) );
-    // pathDir = _.pathRelative( self.rootPath, pathDir );
-    // if( pathDir === '.' )
-    // pathDir = '';
-    // fileName = _.pathName({ path : path, withExtension : 1 });
+    // dir = _.path.resolve( _.path.dir( path ) );
+    // dir = _.path.relative( self.rootPath, dir );
+    // if( dir === '.' )
+    // dir = '';
+    // fileName = _.path.name({ path : path, withExtension : 1 });
 
-    var splitted = _.pathSplit( path );
+    var splitted = _.path.split( path );
     if( splitted.length > 1 )
-    pathDir = splitted[ 0 ];
+    dir = splitted[ 0 ];
     else
-    pathDir = '';
+    dir = '';
 
-    fileName = _.pathName({ path : path, withExtension : 1 });
+    fileName = _.path.name({ path : path, withExtension : 1 });
   }
 
   if( path === '.' )
@@ -215,7 +215,7 @@ function _select( path, mode, value, o )
   var result = _.entitySelect
   ({
     container : self.tree,
-    query : usingDelete ? pathDir : path,
+    query : usingDelete ? dir : path,
     usingSet : usingSet,
     set : value,
     delimeter : [ './', '/' ]
@@ -248,7 +248,7 @@ function _select( path, mode, value, o )
 
   if( _.strIs( result ) )
   {
-    var nameWithExt = _.pathName({ path : path, withExtension : 1 });
+    var nameWithExt = _.path.name({ path : path, withExtension : 1 });
     return [ nameWithExt ];
   }
 }
@@ -292,7 +292,7 @@ function directoryRead( o )
   return handleEnd();
   else
   {
-    result = self._select( _.pathResolve( o.filePath ) );
+    result = self._select( _.path.resolve( o.filePath ) );
 
     if( result !== undefined )
     return handleEnd();
@@ -307,7 +307,7 @@ function directoryRead( o )
 
   // if( _.strIs( o ) )
   // {
-  //   o = _.pathResolve( o );
+  //   o = _.path.resolve( o );
   //   var result = self._select( o );
   //   if( result !== undefined )
   //   return result;
@@ -315,7 +315,7 @@ function directoryRead( o )
 
   // if( _.objectIs( o ) )
   // {
-    // o.filePath = _.pathResolve( o.filePath );
+    // o.filePath = _.path.resolve( o.filePath );
     //
     // var result = self._select( o.filePath );
     //
@@ -744,7 +744,7 @@ var Proto =
 
 _.mapExtend( Proto,Extend );
 
-_.classMake
+_.classDeclare
 ({
   cls : Self,
   parent : Parent,

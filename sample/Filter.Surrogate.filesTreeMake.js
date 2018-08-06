@@ -6,7 +6,7 @@ var _ = wTools;
 /* making file tree cache */
 
 var rootPath = __dirname;
-var testDir = _.pathJoin( rootPath, 'SurrogateSample' );
+var testDir = _.join( rootPath, 'SurrogateSample' );
 
 _.fileProvider.fileDelete( testDir );
 
@@ -14,7 +14,7 @@ var tree = _.FileFilter.Surrogate.filesTreeMake( rootPath );
 
 /* writting to *.js file */
 
-var fileTreePath = _.pathJoin( testDir, 'wFilesFilterSurrogate.js' );
+var fileTreePath = _.join( testDir, 'wFilesFilterSurrogate.js' );
 
 /* prepare data: rootPath and tree as json object */
 var data = 'var rootPath = ' + _.toStr( rootPath, { wrap : 1 } );
