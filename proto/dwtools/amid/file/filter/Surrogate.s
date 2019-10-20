@@ -23,9 +23,8 @@ if( typeof module !== 'undefined' )
     if( !toolsExternal )
     require( toolsPath );
   }
-
-
-  var _global = _global_; var _ = _global_.wTools;
+  var _global = _global_;
+  var _ = _global_.wTools;
 
   if( !_global_.wTools.FileProvider )
   require( 'wFiles' );
@@ -33,8 +32,8 @@ if( typeof module !== 'undefined' )
 }
 
 //
-
-var _global = _global_; var _ = _global_.wTools;
+var _global = _global_;
+var _ = _global_.wTools;
 _.FileFilter = _.FileFilter || Object.create( null );
 if( _.FileFilter.Surrogate )
 return;
@@ -248,8 +247,8 @@ function _select( path, mode, value, o )
 
   if( _.strIs( result ) )
   {
-    var nameWithExt = _.path.name({ path : path, withExtension : 1 });
-    return [ nameWithExt ];
+    var fullName = _.path.name({ path : path, withExtension : 1 });
+    return [ fullName ];
   }
 }
 
